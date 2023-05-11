@@ -1,11 +1,10 @@
 #include <stdio.h>
 
-
-int summation(int *A, int i, int n)
+long long int summation(int *A, int i, int n)
 {
    if (i == n) return 0;
 
-   int s = A[i] + summation(A, i+1, n);
+   long long int s = A[i] + summation(A, i+1, n);
    return s;
     
     
@@ -21,7 +20,7 @@ int main()
         scanf("%d", &A[i]);
     }
 
-    int r = summation(A, 0, n);
-    printf("%d\n", r);
+    long long int r = summation(A, 0, n);
+    printf("%lld", r);
     return 0;
 }
