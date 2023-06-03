@@ -17,16 +17,20 @@ struct person
 };
 
 // function prototype
-int loggedIN(struct person [], int u1);
-int createAccount(struct person []);
-int navigate(struct person [], int u1);
-int profile(struct person [], int u1);
-int takeLoan(struct person [], int u1);
-int depositMoney(struct person [], int u1);
-int withdrawMoney(struct person [], int u1);
-int makeTransaction(struct person [], int u1);
+int loggedIN(struct person[], int u1);
+int createAccount(struct person[]);
+int navigate(struct person[], int u1);
+int profile(struct person[], int u1);
+int takeLoan(struct person[], int u1);
+int depositMoney(struct person[], int u1);
+int withdrawMoney(struct person[], int u1);
+int makeTransaction(struct person[], int u1);
 int aboutProject();
-int identification(struct person []);
+int identification(struct person[]);
+int admin(struct person[]);
+int all_accounts(struct person[]);
+int update(struct person[]);
+int year_customer(struct person[]);
 
 // main funciton
 int main()
@@ -69,6 +73,7 @@ int main()
     printf("\t\t[2] Create new account\n");
     printf("\t\t[3] Exit\n");
     printf("\t\t[4] About Project and Updates\n");
+    printf("\t\t[5] Log in as Admin\n");
 
     int choice;
     printf("Your Choice: ");
@@ -94,6 +99,11 @@ int main()
     // about us
     case 4:
         aboutProject();
+        break;
+
+    // admin
+    case 5:
+        admin(p);
         break;
     }
 
@@ -202,7 +212,7 @@ int createAccount(struct person p[])
     scanf("%d", &u1);
     printf("Please Choose Password: ");
     scanf("%d", &p1);
-    
+
     strcpy(p[u1].name, n);
     p[u1].id = u1;
     p[u1].pass = p1;
@@ -240,7 +250,7 @@ int profile(struct person p[], int u1)
     printf("You owe bank: %d BDT\n", p[u1].loanAmount);
     printf("Your deposit amount: %d BDT\n", p[u1].deposit);
     printf("Your withdraw amount: %d BDT\n\n", p[u1].withdraw);
-    
+
     printf("-----------------------------------------------------\n");
     printf("\t\t[1] Navigate\n");
     printf("\t\t[2] Log Out\n");
@@ -264,17 +274,14 @@ int profile(struct person p[], int u1)
     }
 }
 
-
 // id input
 int identification(struct person p[])
 {
-        int u1;
-        printf("User ID: ");
-        scanf("%d", &u1);
-        loggedIN(p, u1);
+    int u1;
+    printf("User ID: ");
+    scanf("%d", &u1);
+    loggedIN(p, u1);
 }
-
-
 
 // takeLoan function defination
 int takeLoan(struct person p[], int u1)
@@ -415,25 +422,40 @@ int makeTransaction(struct person p[], int u1)
 // aboutProject funtion defination
 int aboutProject()
 {
-    printf("\nThis Project is called Bank Management System using C progrmamming language.\n\n");
-    printf("Some key features of this project: \n");
-    printf("1. Create new account\n");
-    printf("2. Different schemes\n");
-    printf("3. Loan system\n");
-    printf("4. Update information (Not included yet!)\n");
-    printf("5. Removing existing account (Not included yet!)\n");
-    printf("6. Show customer profile\n");
-    printf("7. Calculate after transaction\n");
-    printf("8. Show the list of exitsting account (Not included yet!)\n");
-    printf("9. Log out / Log in\n");
-    printf("10. Exit program\n");
+    // printf("\nThis Project is called Bank Management System using C progrmamming language.\n\n");
+    // printf("Some key features of this project: \n");
+    // printf("1. Create new account\n");
+    // printf("2. Different schemes\n");
+    // printf("3. Loan system\n");
+    // printf("4. Update information (Not included yet!)\n");
+    // printf("5. Removing existing account (Not included yet!)\n");
+    // printf("6. Show customer profile\n");
+    // printf("7. Calculate after transaction\n");
+    // printf("8. Show the list of exitsting account (Not included yet!)\n");
+    // printf("9. Log out / Log in\n");
+    // printf("10. Exit program\n");
 
-    printf("\nContributed by: \n");
-    printf("1. Nabil Khan (1036)\n");
-    printf("2. Md. Sakib hossain (1266)\n");
-    printf("3. Md. Shahriar Islam (1259)\n");
-    printf("4. Md Assaduzzaman (1233)\n\n\n");
+    // printf("\nContributed by: \n");
+    // printf("1. Nabil Khan (1036)\n");
+    // printf("2. Md. Sakib hossain (1266)\n");
+    // printf("3. Md. Shahriar Islam (1259)\n");
+    // printf("4. Md Assaduzzaman (1233)\n\n\n");
+    printf("\n\n");
+    FILE *fp = NULL;
 
+    char ch;
+
+    fp = fopen("text.txt", "r");
+
+    while (!feof(fp))
+    {
+        ch = fgetc(fp);
+        printf("%c", ch);
+    }
+
+    fclose(fp);
+
+    printf("\n\n-----------------------------------------------------\n");
     printf("\t\t[1] Home\n");
     printf("\t\t[2] Exit\n");
 
@@ -451,3 +473,117 @@ int aboutProject()
     }
 }
 
+// admin
+
+int admin(struct person p[])
+{
+    int key;
+    printf("Admin key: ");
+    scanf("%d", &key);
+
+    if (key == 91011)
+    {
+        printf("----------------- hello Admin! -------------------\n\n");
+        printf("\t\t[1] See all the existing account\n");
+        printf("\t\t[2] Customer of the year\n");
+        printf("\t\t[3] Log out\n");
+        printf("\t\t[4] Exit\n\n");
+
+        int choice;
+        printf("Your Choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1)
+        {
+            all_accounts(p);
+        }
+        else if (choice == 2)
+        {
+            year_customer(p);
+        }
+        else if (choice == 3)
+        {
+            main();
+        }
+        else
+        {
+            exit(0);
+        }
+    }
+    else
+    {
+        printf("opps! Wrong Credentials\n");
+        main();
+    }
+}
+
+//  details of all accounts
+int all_accounts(struct person p[])
+{
+    for (int i = 0; i < 3; i++)
+    {
+        printf("Id: %d\n", i);
+        printf("Name: %s\n", p[i].name);
+        printf("Blance: %d\n\n", p[i].balance);
+    }
+
+    printf("-----------------------------------------------------\n");
+    printf("\t\t[1] Admin panel\n");
+    printf("\t\t[2] Log Out\n");
+    printf("\t\t[3] Exit\n");
+
+    int choice;
+    printf("Your Choice: ");
+    scanf("%d", &choice);
+
+    if (choice == 1)
+    {
+        admin(p);
+    }
+    else if (choice == 2)
+    {
+        main();
+    }
+    else
+    {
+        exit(0);
+    }
+}
+
+// update account info
+int year_customer(struct person p[])
+{
+
+    int money = 0, indx = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        if (p[i].balance > money)
+        {
+            money = p[i].balance;
+            indx = i;
+        }
+    }
+    printf("Customer of the year: %s\n\n", p[indx].name);
+
+    printf("-----------------------------------------------------\n");
+    printf("\t\t[1] Admin panel\n");
+    printf("\t\t[2] Log Out\n");
+    printf("\t\t[3] Exit\n");
+
+    int choice;
+    printf("Your Choice: ");
+    scanf("%d", &choice);
+
+    if (choice == 1)
+    {
+        admin(p);
+    }
+    else if (choice == 2)
+    {
+        main();
+    }
+    else
+    {
+        exit(0);
+    }
+}
